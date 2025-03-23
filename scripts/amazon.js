@@ -1,3 +1,4 @@
+
 products.forEach((item) => {
   document.querySelector('.item-layout')
     .innerHTML += `
@@ -35,9 +36,42 @@ products.forEach((item) => {
       </select>
      </div>
     </nav>
-    <div class="add-to-cart"> <button> Add to Cart</button>
+    <div class="add-to-cart">
+    <button class="cart-btn" 
+    data-item-id ="${item.productid}"> Add to Cart</button>
     </div>
     </div>
 
   `
-})
+});
+
+
+let cart = [];
+  
+  document.querySelectorAll('.cart-btn').forEach((button)=>{
+  // looping through each buttons and onlcick event
+    let matching;
+    button.addEventListener('click',()=>{
+      const itemId = button.dataset.itemId
+    
+//looping thorough cart to check same item  
+    cart.forEach((product)=>{
+      if(itemId === product.itemId ){
+        matching = product
+      }
+    })
+    
+//updating the quantity to increase in variable matching quantity 
+    if (matching) {
+      matching.quantity += 1
+    }else{
+      cart.push({
+        itemId: itemId,
+        quantity: 1
+      })
+    }
+    console.log(cart)
+    
+    })
+  //event listner end
+  })
