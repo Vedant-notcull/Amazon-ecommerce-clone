@@ -1,0 +1,33 @@
+
+body{
+  padding-top:70px;
+}
+
+
+.item-layout{
+  max-width:1000px;
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  background-color: #E1B2DD
+}
+
+.item-box{
+  padding:20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.item-info{
+  display: flex;
+  flex-direction: column;
+}
+
+.item-rating{
+  display: flex;
+  flex-direction:row;
+}
+
+/* box done above  */
+.item-name{
+  
+}

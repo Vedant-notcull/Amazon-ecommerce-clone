@@ -1,0 +1,120 @@
+body {
+    font-size: 15pt;
+    padding:none;
+    margin:0px;
+    position :relative;
+}
+
+h2{
+  margin:0px;
+}
+
+
+header{
+  height:70px;
+  width:100%;
+  background-color: #0C0524;
+  margin:none;
+  display: flex;
+  justify-content: space-between;
+  padding:0px 20px;
+  color:white;
+  position : fixed;
+  top:0;
+  left:0;
+ 
+}
+
+.logo-box{
+  flex:1;
+  justify-content: start;
+  align-content: center;
+  padding:10px;
+}
+
+.logo-box img{
+  width:70%;
+  display: flex;
+}
+
+/* Search bar and its div*/
+.search-box{
+  flex:5;
+  align-content: center;
+  padding:15px 15px;
+  display:flex;
+}
+.search-bar{
+  flex:7;
+  align-items: stretch;
+  display: inline-block;
+  border:none;
+  border-bottom-left-radius: 3px;
+  border-top-left-radius:3px ;
+  font-size: 19px;
+  padding-left: 5px;
+}
+.search-btn{
+  width:40px;
+  display: inline-block;
+  border:none;
+  align-items: stretch;
+  border-bottom-right-radius: 3px;
+  border-top-right-radius:3px;
+  background-color: #DBA619;
+}
+.search-btn img{
+  width:80%
+}
+
+
+/* cart link button and retun page button */
+.redirect-box{
+  flex:2;
+  display: flex;
+  align-items:stretch;
+  font-weight: bold;
+}
+.cart-link{
+  flex:2;
+  height:99%;
+  padding-left:5px;
+  display: flex;
+  align-items: center;
+  column-gap: 2px;
+  border:1px solid #0C0524;
+  border-bottom:0px;
+}
+.cart-link img{
+  width : 40%; 
+}
+
+.return-link{
+  flex:1;
+  height:99%;
+  font-size:14px;
+  align-content:center;
+  border:1px solid #0C0524;
+  border-bottom:0px;
+  padding:0px 5px;
+  
+}
+
+/* the color and underline of link elements */
+a{
+  color:white;
+  text-decoration: none;
+}
+
+.return-link:hover, .cart-link:hover , .logo-box:hover{
+  border: 1px solid white ;
+  border-bottom:0px;
+}
+
+
+
+
+
+
+
+/* body page  */
