@@ -1,4 +1,3 @@
-
 products.forEach((item) => {
   document.querySelector('.item-layout')
     .innerHTML += `
@@ -46,8 +45,10 @@ products.forEach((item) => {
 });
 
 
+
 let cart = [];
   
+ function attach(){
   document.querySelectorAll('.cart-btn').forEach((button)=>{
   // looping through each buttons and onlcick event
     let matching;
@@ -55,11 +56,10 @@ let cart = [];
       const itemId = button.dataset.itemId
     
 //looping thorough cart to check same item  
-    cart.forEach((product)=>{
-      if(itemId === product.itemId ){
-        matching = product
-      }
-    })
+     cart.forEach((product)=>{
+      if(itemId  === product.itemId){
+        matching = product  }
+        })
     
 //updating the quantity to increase in variable matching quantity 
     if (matching) {
@@ -70,8 +70,21 @@ let cart = [];
         quantity: 1
       })
     }
-    console.log(cart)
-    
+   
+// makes the cart logo up interatcive
+    let cartQuantity = 0;
+    cart.forEach( (item)=>{
+      cartQuantity += item.quantity
     })
+    
+    document.querySelector('.cart-quantity').innerHTML = cartQuantity
+    });
+    
   //event listner end
   })
+  }
+  
+  attach()
+  
+  
+  
