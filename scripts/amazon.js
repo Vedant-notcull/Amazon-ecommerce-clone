@@ -22,11 +22,11 @@ products.forEach((item) => {
      ${item.price}
      </div>
      <div class="quantity-box">
-      <select>
+      <select class= "select-quantity-${item.productid}" >
         <option selected value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
-        <option value="4">44</option> 
+        <option value="4">4</option> 
         <option value="5">5</option>
         <option value="6">6</option>
         <option value="7">7</option>
@@ -48,13 +48,15 @@ products.forEach((item) => {
 
 let cart = [];
   
- function attach(){
   document.querySelectorAll('.cart-btn').forEach((button)=>{
   // looping through each buttons and onlcick event
     let matching;
     button.addEventListener('click',()=>{
       const itemId = button.dataset.itemId
-    
+      
+      const saman = document.querySelector(`.select-quantity-${itemId}`)
+      
+      
 //looping thorough cart to check same item  
      cart.forEach((product)=>{
       if(itemId  === product.itemId){
@@ -63,16 +65,22 @@ let cart = [];
     
 //updating the quantity to increase in variable matching quantity 
     if (matching) {
-      matching.quantity += 1
+      matching.quantity += Number(saman.value)
     }else{
       cart.push({
         itemId: itemId,
-        quantity: 1
+        quantity: Number(saman.value)
       })
     }
+    
+// tajes quantity fron the user selected quantity theough document query 
+  
+  
+  
    
 // makes the cart logo up interatcive
     let cartQuantity = 0;
+    console.log(cart)
     cart.forEach( (item)=>{
       cartQuantity += item.quantity
     })
@@ -82,9 +90,8 @@ let cart = [];
     
   //event listner end
   })
-  }
   
-  attach()
+  
   
   
   

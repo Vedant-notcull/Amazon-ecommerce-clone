@@ -109,3 +109,10 @@ body{
   background-color: #FFDA54;
   font-size:17px;
 }
+.cart-quantity {
+  position: absolute;
+  top: 11px;
+  left: 32px;
+  font-size: 17px;
+  color: #DBA619;
+}
