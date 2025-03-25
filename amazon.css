@@ -96,7 +96,6 @@ body{
   font-weight: bold;
 }
 .add-to-cart {
-  padding-top:25px;
   display: flex;
   align-items:center;
   justify-content:center;
@@ -115,4 +114,22 @@ body{
   left: 32px;
   font-size: 17px;
   color: #DBA619;
+}
+
+/* this is to show and remove the added message after every click */
+
+[class^="added-to-cart-"]{
+  display :flex;
+  align-items:center;
+  column-gap:9px;
+  color:#067D62;
+  font-size:16px;
+  opacity : 0;
+}
+[class^="added-to-cart-"] img{
+  width:25px;
+}
+
+.after-added-item{
+  opacity : 1;
 }

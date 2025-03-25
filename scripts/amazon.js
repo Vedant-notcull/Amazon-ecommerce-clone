@@ -35,6 +35,9 @@ products.forEach((item) => {
       </select>
      </div>
     </nav>
+    <div class="added-to-cart-${item.productid}">
+     <img src="images/checkmark.png"> Added
+    </div>
     <div class="add-to-cart">
     <button class="cart-btn" 
     data-item-id ="${item.productid}"> Add to Cart</button>
@@ -48,50 +51,36 @@ products.forEach((item) => {
 
 let cart = [];
   
-  document.querySelectorAll('.cart-btn').forEach((button)=>{
-  // looping through each buttons and onlcick event
+ buttonclick() 
+function buttonclick() {
+  document.querySelectorAll('.cart-btn').forEach((button) => {
+    // looping through each buttons and onlcick event
     let matching;
-    button.addEventListener('click',()=>{
-      const itemId = button.dataset.itemId
-      
-      const saman = document.querySelector(`.select-quantity-${itemId}`)
+    button.addEventListener('click', () => {
+      const itemId = button.dataset.itemId;
       
       
-//looping thorough cart to check same item  
-     cart.forEach((product)=>{
-      if(itemId  === product.itemId){
-        matching = product  }
-        })
-    
-//updating the quantity to increase in variable matching quantity 
-    if (matching) {
-      matching.quantity += Number(saman.value)
-    }else{
-      cart.push({
-        itemId: itemId,
-        quantity: Number(saman.value)
+      //looping thorough cart to check same item  
+      cart.forEach((product) => {
+        if (itemId === product.itemId) {
+          matching = product
+        }
       })
-    }
-    
-// tajes quantity fron the user selected quantity theough document query 
-  
-  
-  
-   
-// makes the cart logo up interatcive
-    let cartQuantity = 0;
-    console.log(cart)
-    cart.forEach( (item)=>{
-      cartQuantity += item.quantity
-    })
-    
-    document.querySelector('.cart-quantity').innerHTML = cartQuantity
-    });
-    
-  //event listner end
+      
+      //takes user selected quantity and increases the cart accordingly 
+      checkMatchingQuantity(matching, itemId)
+      
+      //message after clicking button
+      displayAdded(itemId);
+      
+      // makes the cart logo up interatcive
+      quantityIncrease();
+      
+      //consolelog cart 
+      console.log(cart)
+      
+    }); //event listner end
   })
-  
-  
-  
+}  
   
   
