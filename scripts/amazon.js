@@ -1,3 +1,9 @@
+import {cart, checkMatchingQuantity} from '../scripts/cart.js'
+import {products} from '../scripts/products.js'
+import {displayAdded, quantityIncrease } from '../scripts/functions.js'
+
+
+
 products.forEach((item) => {
   document.querySelector('.item-layout')
     .innerHTML += `
@@ -49,7 +55,7 @@ products.forEach((item) => {
 
 
 
-let cart = [];
+
   
  buttonclick() 
 function buttonclick() {
@@ -68,13 +74,13 @@ function buttonclick() {
       })
       
       //takes user selected quantity and increases the cart accordingly 
-      checkMatchingQuantity(matching, itemId)
+      checkMatchingQuantity(matching, itemId,)
       
       //message after clicking button
       displayAdded(itemId);
       
       // makes the cart logo up interatcive
-      quantityIncrease();
+      quantityIncrease(cart);
       
       //consolelog cart 
       console.log(cart)

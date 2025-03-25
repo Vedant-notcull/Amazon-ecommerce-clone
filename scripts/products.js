@@ -1,4 +1,4 @@
- const products = [
+export const products = [
   {
     productid: "id1",
     image: "/images/products/athletic-cotton-socks-6-pairs.jpg",
