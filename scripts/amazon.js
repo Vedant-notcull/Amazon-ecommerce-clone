@@ -1,4 +1,4 @@
-import {cart, checkMatchingQuantity} from '../scripts/cart.js'
+import {cart as ogcart, checkMatchingQuantity} from '../scripts/cart.js'
 import {products} from '../scripts/products.js'
 import {displayAdded, quantityIncrease } from '../scripts/functions.js'
 
@@ -55,19 +55,20 @@ products.forEach((item) => {
 
 
 
-
+let cart =  ogcart
   
  buttonclick() 
 function buttonclick() {
   document.querySelectorAll('.cart-btn').forEach((button) => {
     // looping through each buttons and onlcick event
+    
     let matching;
     button.addEventListener('click', () => {
       const itemId = button.dataset.itemId;
       
       
       //looping thorough cart to check same item  
-      cart.forEach((product) => {
+      ogcart.forEach((product) => {
         if (itemId === product.itemId) {
           matching = product
         }
@@ -76,14 +77,17 @@ function buttonclick() {
       //takes user selected quantity and increases the cart accordingly 
       checkMatchingQuantity(matching, itemId,)
       
+      
       //message after clicking button
       displayAdded(itemId);
       
       // makes the cart logo up interatcive
-      quantityIncrease(cart);
+      localStorage.setItem('cart', JSON.stringify(cart))
       
+      quantityIncrease(ogcart);
       //consolelog cart 
       console.log(cart)
+      
       
     }); //event listner end
   })
