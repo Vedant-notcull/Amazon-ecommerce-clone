@@ -21,7 +21,8 @@ cart.forEach((cartItem) => {
   })
 
   document.querySelector('.layout-1').innerHTML += `
-<nav class="product-box">
+<nav class="product-box 
+js-remove-${cartItem.itemId}" >
  <div class="product-info">
    <nav class="headline">
      Delivery: Tuesday 21 jan
@@ -112,8 +113,19 @@ data-item-id ="${cartItem.itemId}"
 
 document.querySelector('.clear')
   .addEventListener('click', () => {
-    localStorage.removeItem('cart')
+    localStorage.removeItem('cart');
+    document.querySelector('.layout-1').innerHTML='';
   })
+
+
+//js-remove-${cartItem.itemId}
+
+
+
+
+
+
+
 
 
 deletItems();
@@ -136,9 +148,15 @@ document.querySelectorAll('.delete-link').forEach((link) => {
   
    cart = updated;
    localStorage.setItem('cart', JSON.stringify(cart))
-   ui()
-   deletItems()
+   
+   const removed = document.querySelector(`.js-remove-${btnId}`)
+   
+   removed.remove()
+   
+  // ui()
+  // deletItems()
   })
 
 })
 }
+
