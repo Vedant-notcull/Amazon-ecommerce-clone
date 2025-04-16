@@ -42,15 +42,25 @@ js-remove-${cartItem.itemId}" >
      <span class="info-price">
       ${matchingItem.price}
      </span>
+<div class="qty-info"
      <span class="info-quantity">
        Quantity: ${cartItem.quantity}</span>
    <div class="links" >     
-<span class="update-link">update</span>
+<span class="update-link"
+data-item-id ="${cartItem.itemId}"
+>update</span>
+<div class="after-updt"
+data-item-id ="${cartItem.itemId}">
+  <input type="text" class="qty-input">
+  <span class="save-link">Save</span>
+</div>
+
+
 <span class="delete-link"
 data-item-id ="${cartItem.itemId}"
 >delete</span>
    </div>
-   
+ </div>  
 </div>
    
   <div class="delivery-info">
@@ -165,4 +175,24 @@ document.querySelectorAll('.delete-link').forEach((link) => {
 
 })
 }
+const save = document.querySelector('.save-link')
 
+let updtId ;
+document.querySelectorAll('.update-link').forEach( (link)=>{
+  
+  link.addEventListener('click',(event)=>{
+// hides previous clicked ones
+  updtId = event.target.dataset.itemId;
+  
+//display only the one  matched with id
+ document.querySelectorAll('.after-updt').forEach((update) => {
+  update.classList.remove('on');
+   if (update.dataset.itemId === updtId)
+   { update.classList.add('on');}
+  
+ });//all after- update endsloop
+  
+
+  
+ })//link event listener end 
+})// loop for all update link 

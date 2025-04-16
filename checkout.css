@@ -32,14 +32,28 @@ header{
   margin-right:20px;
 }
 
-.delete-link, .update-link{
+.delete-link, .update-link, .save-link{
   display: inline-block  ;
   color:#3481E5;
 }
 .links{
   display: flex;
   column-gap: 9px;
+  margin-left:4px;
 }
+
+.after-updt{
+  display :none;
+  column-gap:6px;
+}
+.qty-input{
+  width:23px;
+}
+.on{
+  display:flex;
+}
+
+
 /* ------------------------------------- 
 -                  Body       
 -------------------------------------- */
@@ -257,4 +271,16 @@ header{
     flex:2;
   }
 
+}
+
+
+
+
+/* ============°°°============°°°°
+.         after click update
+°==================°°°°°°°°===== */
+
+
+.is-qty .after-updt {
+  display: initial;
 }
