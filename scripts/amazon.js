@@ -2,7 +2,7 @@ import {cart as ogcart, checkMatchingQuantity} from '../scripts/cart.js'
 import {products} from '../scripts/products.js'
 import {displayAdded, quantityIncrease } from '../scripts/functions.js'
 
-
+quantityIncrease(ogcart)
 
 products.forEach((item) => {
   document.querySelector('.item-layout')
@@ -84,7 +84,7 @@ function buttonclick() {
       // makes the cart logo up interatcive
       localStorage.setItem('cart', JSON.stringify(cart))
       
-      quantityIncrease(ogcart);
+      quantityIncrease(cart);
       //consolelog cart 
       console.log(cart)
       

@@ -1,11 +1,15 @@
 import { cart as cartt } from '/scripts/cart.js'
 import { products } from '/scripts/products.js'
+import {checkout} from '/scripts/functions.js'
 console.log('heloo')
 
 let cart = JSON.parse(localStorage.getItem('cart'))
 
-ui()
 
+
+ui()
+checkout(cart)
+    
 function ui() {
   document.querySelector('.layout-1').innerHTML = '';
 cart.forEach((cartItem) => {
@@ -114,7 +118,9 @@ data-item-id ="${cartItem.itemId}"
 document.querySelector('.clear')
   .addEventListener('click', () => {
     localStorage.removeItem('cart');
-    document.querySelector('.layout-1').innerHTML='';
+    document.querySelector('.layout-1').innerHTML= `
+    <h1>Review your Order</h1>
+    `;
   })
 
 
@@ -152,7 +158,7 @@ document.querySelectorAll('.delete-link').forEach((link) => {
    const removed = document.querySelector(`.js-remove-${btnId}`)
    
    removed.remove()
-   
+   checkout(cart)
   // ui()
   // deletItems()
   })

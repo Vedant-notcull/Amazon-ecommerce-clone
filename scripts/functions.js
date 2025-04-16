@@ -19,6 +19,16 @@ export function quantityIncrease(cart) {
     cartQuantity += item.quantity
   })
   document.querySelector('.cart-quantity').innerHTML = cartQuantity;
+  
 }
 
 
+export function checkout(cart){
+  let cartquantity = 0
+  cart.forEach( (item)=>{
+   cartquantity += item.quantity
+  })
+  document.querySelector('.sec2').innerHTML = 
+  `Checkout (${cartquantity} items)`
+  
+}
