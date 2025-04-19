@@ -1,4 +1,4 @@
-import { cart as cartt } from '/scripts/cart.js'
+import { cart as cartt, updateQty } from '/scripts/cart.js'
 import { products } from '/scripts/products.js'
 import {checkout} from '/scripts/functions.js'
 console.log('heloo')
@@ -10,7 +10,7 @@ let cart = JSON.parse(localStorage.getItem('cart'))
 ui()
 checkout(cart)
     
-function ui() {
+ function ui() {
   document.querySelector('.layout-1').innerHTML = '';
 cart.forEach((cartItem) => {
   
@@ -42,7 +42,7 @@ js-remove-${cartItem.itemId}" >
      <span class="info-price">
       ${matchingItem.price}
      </span>
-<div class="qty-info"
+<div class="qty-info">
      <span class="info-quantity">
        Quantity: ${cartItem.quantity}</span>
    <div class="links" >     
@@ -51,8 +51,11 @@ data-item-id ="${cartItem.itemId}"
 >update</span>
 <div class="after-updt"
 data-item-id ="${cartItem.itemId}">
-  <input type="text" class="qty-input">
-  <span class="save-link">Save</span>
+  <input type="text" class="qty-input"
+  data-item-id ="${cartItem.itemId}">
+  <span class="save-link"
+  data-item-id ="${cartItem.itemId}"
+  >Save</span>
 </div>
 
 
@@ -175,7 +178,7 @@ document.querySelectorAll('.delete-link').forEach((link) => {
 
 })
 }
-const save = document.querySelector('.save-link')
+//const qtyInput = document.querySelectorAll('.qty-input')
 
 let updtId ;
 document.querySelectorAll('.update-link').forEach( (link)=>{
@@ -186,13 +189,44 @@ document.querySelectorAll('.update-link').forEach( (link)=>{
   
 //display only the one  matched with id
  document.querySelectorAll('.after-updt').forEach((update) => {
+  
   update.classList.remove('on');
    if (update.dataset.itemId === updtId)
    { update.classList.add('on');}
   
+  
  });//all after- update endsloop
+ })//link event listener end 
+ 
+})// loop for all update link 
+
+
+const save = document.querySelectorAll('.save-link')
+savebbtn()
+function savebbtn(){ 
+save.forEach((save)=>{
+   
+  save.addEventListener('click',()=>{
+  
+  
+  const saveId = save.dataset.itemId
+   if (save.dataset.itemId === updtId) {
+   const matchingUpdt = document.querySelector(`.after-updt[data-item-id="${updtId}"]`); matchingUpdt.classList.remove('on')};
+   
+   
+   updateQty(saveId)
+   checkout(cart)
+
+   })
+  
+  
+  
+  })
+}
+  
   
 
-  
- })//link event listener end 
-})// loop for all update link 
+checkout(cart)
+
+
+

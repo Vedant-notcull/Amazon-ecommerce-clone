@@ -24,6 +24,7 @@ export function quantityIncrease(cart) {
 
 
 export function checkout(cart){
+ cart = JSON.parse(localStorage.getItem('cart'))
   let cartquantity = 0
   cart.forEach( (item)=>{
    cartquantity += item.quantity

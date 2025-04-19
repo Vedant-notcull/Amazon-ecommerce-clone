@@ -20,3 +20,32 @@ export function checkMatchingQuantity(matching, itemId,) {
 }
 
 
+
+
+export function updateQty(saveId) {
+  const qtyInput = document.querySelector(`.qty-input[data-item-id="${saveId}"]`);
+  
+  
+  const qtychange = Number(qtyInput.value)
+  
+  
+  const productBoxx = document.querySelector(`.js-remove-${saveId}`)
+  const qtyProduct = productBoxx.querySelector('.info-quantity')
+  
+  if (qtychange > 0) {
+    qtyProduct.innerHTML = `Quantity: ${qtychange}`
+    
+    qtyInput.value = '';
+    cart.forEach((cartItem) => {
+      if (saveId === cartItem.itemId) {
+        cartItem.quantity = qtychange
+        localStorage.setItem('cart', JSON.stringify(cart))
+        
+      }
+    })
+    
+  }
+  
+  
+}
+

@@ -53,6 +53,9 @@ header{
   display:flex;
 }
 
+.qty-info{
+  display:flex;
+}
 
 /* ------------------------------------- 
 -                  Body       
