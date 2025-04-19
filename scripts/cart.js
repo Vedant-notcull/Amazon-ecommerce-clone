@@ -27,7 +27,7 @@ export function updateQty(saveId) {
   
   
   const qtychange = Number(qtyInput.value)
-  
+  cart = JSON.parse(localStorage.getItem('cart'))
   
   const productBoxx = document.querySelector(`.js-remove-${saveId}`)
   const qtyProduct = productBoxx.querySelector('.info-quantity')
@@ -36,6 +36,7 @@ export function updateQty(saveId) {
     qtyProduct.innerHTML = `Quantity: ${qtychange}`
     
     qtyInput.value = '';
+    
     cart.forEach((cartItem) => {
       if (saveId === cartItem.itemId) {
         cartItem.quantity = qtychange

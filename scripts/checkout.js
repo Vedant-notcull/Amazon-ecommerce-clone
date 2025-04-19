@@ -226,7 +226,7 @@ save.forEach((save)=>{
   
   
 
-checkout(cart)
+
 
 
 
