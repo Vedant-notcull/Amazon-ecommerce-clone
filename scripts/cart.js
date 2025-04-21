@@ -1,6 +1,8 @@
+import { products } from '/scripts/products.js'
+
 export let cart = JSON.parse(localStorage.getItem('cart'))|| [] ;
 
-
+let itemId;
 // checkMatchingQuantity()
 //increases the quantity of new item and matching one as per the user select
 export function checkMatchingQuantity(matching, itemId,) {
@@ -11,13 +13,20 @@ export function checkMatchingQuantity(matching, itemId,) {
   } else {
     cart.push({
       itemId: itemId,
-      quantity: Number(saman.value)
+      quantity: Number(saman.value),
+      deliveryOptionId : '2',
     })
-  
+  itemId = itemId
   localStorage.setItem('cart', JSON.stringify(cart))
   }
   
 }
+
+
+
+
+
+
 
 
 
@@ -50,3 +59,13 @@ export function updateQty(saveId) {
   
 }
 
+export function updatedeliveryId(itemId, deliveryOptionId) {
+  let matching;
+  cart.forEach((cartItem) => {
+    if (cartItem.itemId === itemId) {
+      matching = cartItem
+    }
+  })
+  matching.deliveryOptionId = deliveryOptionId
+  localStorage.setItem('cart', JSON.stringify(cart))
+}

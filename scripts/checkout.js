@@ -1,7 +1,13 @@
-import { cart as cartt, updateQty } from '/scripts/cart.js'
+import { cart as cartt, updateQty,
+  updatedeliveryId
+} from '/scripts/cart.js'
 import { products } from '/scripts/products.js'
 import {checkout} from '/scripts/functions.js'
+import {deliveryOptions} from '/scripts/delivery.js'
+import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js'
+
 console.log('heloo')
+
 
 let cart = JSON.parse(localStorage.getItem('cart'))
 
@@ -11,9 +17,10 @@ ui()
 checkout(cart)
     
  function ui() {
-  document.querySelector('.layout-1').innerHTML = '';
-cart.forEach((cartItem) => {
   
+
+cart.forEach((cartItem) => {
+
   const itemId = cartItem.itemId;
   
   let matchingItem = '';
@@ -24,12 +31,28 @@ cart.forEach((cartItem) => {
     }
   })
 
-  document.querySelector('.layout-1').innerHTML += `
-<nav class="product-box 
+
+let delivery ;
+const deliveryId = cartItem.deliveryOptionId
+deliveryOptions.forEach( (option)=>{
+  if (option.id === deliveryId){
+    delivery = option
+  }
+});
+
+const today = dayjs();
+  const deliverydate = today.add(
+    delivery.days, 'days'
+  )
+  const dateString = deliverydate.format('dddd, MMMM D')
+
+  
+document.querySelector('.layout-1').innerHTML += `
+<div class="product-box 
 js-remove-${cartItem.itemId}" >
  <div class="product-info">
    <nav class="headline">
-     Delivery: Tuesday 21 jan
+     Delivery: ${dateString}
    </nav>
    <nav class="info-img-part">
    <div class="image-part">
@@ -71,62 +94,18 @@ data-item-id ="${cartItem.itemId}"
      Choose a Delivery option
    </span>
   
-  <div class="delivery-input-select">
-   <input type="radio"
-   class="delivery-input"
-   name="${cartItem.itemId}">
-   
-   <section class="part--2">
-   <div class="delivery-date">
-     Tuesday, June 21
-   </div>
-   <div class="shipping">
-     Free Shipping
-   </div>
-   </section>
-   </div>
-   
-  <div class="delivery-input-select">
-   <input type="radio"
-   class="delivery-input"
-   name="${cartItem.itemId}">
-   
-   <section class="part--2">
-   <div class="delivery-date">
-     Tuesday, June 21
-   </div>
-   <div class="shipping">
-     Free Shipping
-   </div>
-   </section>
-   </div>
   
-  <div class="delivery-input-select">
-   <input type="radio"
-   class="delivery-input"
-   name="${cartItem.itemId}">
-   
-   
-   <section class="part--2">
-   <div class="delivery-date">
-     Tuesday, June 21
-   </div>
-   <div class="shipping">
-     Free Shipping
-   </div>
-   </section>
-   </div>
-   
+${deliveryHTML(cartItem)}
  </div>
  </nav>
 
  </div
-  </nav>
+</div>
   `;
   
   
 });
-}
+
 
 document.querySelector('.clear')
   .addEventListener('click', () => {
@@ -135,11 +114,65 @@ document.querySelector('.clear')
     <h1>Review your Order</h1>
     `;
   })
-
+}
 
 //js-remove-${cartItem.itemId}
 
 
+function deliveryHTML(cartItem){
+  let html = ''
+
+ deliveryOptions.forEach((delivery)=>{
+   const isChecked = delivery.id === cartItem.deliveryOptionId
+   
+  const today = dayjs();
+  const deliverydate = today.add(
+    delivery.days, 'days'
+  )
+  const dateString = deliverydate.format('dddd, MMMM D')
+  
+  
+  const deliveryprice = delivery.price === 0
+  ?'FREE - '
+  :`₹${delivery.price} - `
+  
+  html +=
+  `
+  <div class="delivery-input-select"
+  data-delivery-option-id="${delivery.id}"
+  data-item-id="${cartItem.itemId}">
+   <input type="radio"
+   ${isChecked ? 'checked' : ''}
+   class="delivery-input"
+   name="${cartItem.itemId}"/>
+   
+   <section class="part--2">
+   <div class="delivery-date">
+     ${dateString}
+   </div>
+   <div class="shipping">
+     ${deliveryprice} Shipping
+   </div>
+   </section>
+   </div>  
+  `
+  
+ 
+});
+return html
+  
+}
+document.querySelectorAll('.delivery-input-select').forEach((element) => {
+  element.addEventListener('click', () => {
+    // const {itemId, deliveryOptionId} = element.dataset
+    const deliveryOptionId = element.dataset.deliveryOptionId
+    const itemId = element.dataset.itemId
+    
+    updatedeliveryId(itemId, deliveryOptionId)
+    
+  })
+  
+})
 
 
 
@@ -210,7 +243,7 @@ save.forEach((save)=>{
   
   
   const saveId = save.dataset.itemId
-   if (save.dataset.itemId === updtId) {
+   if (saveId === updtId) {
    const matchingUpdt = document.querySelector(`.after-updt[data-item-id="${updtId}"]`); matchingUpdt.classList.remove('on')};
    
    
@@ -224,9 +257,5 @@ save.forEach((save)=>{
   })
 }
   
-  
-
-
-
 
 
