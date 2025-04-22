@@ -1,3 +1,5 @@
+import { deliveryOptions } from '/scripts/delivery.js';
+import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 
 // displayAdded() function
 //display the added message for 1 sec after clicking the add to cart button 
@@ -23,13 +25,49 @@ export function quantityIncrease(cart) {
 }
 
 
-export function checkout(cart){
- cart = JSON.parse(localStorage.getItem('cart'))
+export function checkout(cart) {
+  cart = JSON.parse(localStorage.getItem('cart'))
   let cartquantity = 0
-  cart.forEach( (item)=>{
-   cartquantity += item.quantity
+  cart.forEach((item) => {
+    cartquantity += item.quantity
   })
-  document.querySelector('.sec2').innerHTML = 
-  `Checkout (${cartquantity} items)`
+  document.querySelector('.sec2').innerHTML =
+    `Checkout (${cartquantity} items)`
+  
+}
+
+
+
+
+//when the delivery date is updated in local storage
+// it gets the new date and updates the product box headline 
+export function headline() {
+  const cart = JSON.parse(localStorage.getItem('cart'))
+  
+  cart.forEach((item) => {
+    const itemId = item.itemId;
+    const deliveryOptionId = item.deliveryOptionId;
+    
+    
+    let delivery;
+    const deliveryId = item.deliveryOptionId
+    deliveryOptions.forEach((option) => {
+      if (option.id === deliveryId) {
+        delivery = option
+      }
+    });
+    
+    const deliveryDate = dayjs().add(delivery.days, 'days');
+    const dateString = deliveryDate.format('dddd, MMMM D');
+    
+    
+    const productBox = document.querySelector(`.js-remove-${itemId}`);
+    if (productBox) {
+      const headline = productBox.querySelector('.headline');
+      if (headline) {
+        headline.innerHTML = `Delivery: ${dateString}`;
+      }
+    }
+  })
   
 }

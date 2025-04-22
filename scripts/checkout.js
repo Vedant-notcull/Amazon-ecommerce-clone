@@ -1,9 +1,11 @@
-import { cart as cartt, updateQty,
+import {
+  cart as cartt,
+  updateQty,
   updatedeliveryId
 } from '/scripts/cart.js'
 import { products } from '/scripts/products.js'
-import {checkout} from '/scripts/functions.js'
-import {deliveryOptions} from '/scripts/delivery.js'
+import { checkout, headline } from '/scripts/functions.js'
+import { deliveryOptions } from '/scripts/delivery.js'
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js'
 
 console.log('heloo')
@@ -15,39 +17,39 @@ let cart = JSON.parse(localStorage.getItem('cart'))
 
 ui()
 checkout(cart)
+
+function ui() {
+  
+  
+  cart.forEach((cartItem) => {
     
- function ui() {
-  
-
-cart.forEach((cartItem) => {
-
-  const itemId = cartItem.itemId;
-  
-  let matchingItem = '';
-  
-  products.forEach((product) => {
-    if (itemId === product.productid) {
-      matchingItem = product
-    }
-  })
-
-
-let delivery ;
-const deliveryId = cartItem.deliveryOptionId
-deliveryOptions.forEach( (option)=>{
-  if (option.id === deliveryId){
-    delivery = option
-  }
-});
-
-const today = dayjs();
-  const deliverydate = today.add(
-    delivery.days, 'days'
-  )
-  const dateString = deliverydate.format('dddd, MMMM D')
-
-  
-document.querySelector('.layout-1').innerHTML += `
+    const itemId = cartItem.itemId;
+    
+    let matchingItem = '';
+    
+    products.forEach((product) => {
+      if (itemId === product.productid) {
+        matchingItem = product
+      }
+    })
+    
+    
+    let delivery;
+    const deliveryId = cartItem.deliveryOptionId
+    deliveryOptions.forEach((option) => {
+      if (option.id === deliveryId) {
+        delivery = option
+      }
+    });
+    
+    const today = dayjs();
+    const deliverydate = today.add(
+      delivery.days, 'days'
+    )
+    const dateString = deliverydate.format('dddd, MMMM D')
+    
+    
+    document.querySelector('.layout-1').innerHTML += `
 <div class="product-box 
 js-remove-${cartItem.itemId}" >
  <div class="product-info">
@@ -102,42 +104,42 @@ ${deliveryHTML(cartItem)}
  </div
 </div>
   `;
+    
+    
+  });
   
   
-});
-
-
-document.querySelector('.clear')
-  .addEventListener('click', () => {
-    localStorage.removeItem('cart');
-    document.querySelector('.layout-1').innerHTML= `
+  document.querySelector('.clear')
+    .addEventListener('click', () => {
+      localStorage.removeItem('cart');
+      document.querySelector('.layout-1').innerHTML = `
     <h1>Review your Order</h1>
     `;
-  })
-}
-
-//js-remove-${cartItem.itemId}
-
-
-function deliveryHTML(cartItem){
-  let html = ''
-
- deliveryOptions.forEach((delivery)=>{
-   const isChecked = delivery.id === cartItem.deliveryOptionId
-   
-  const today = dayjs();
-  const deliverydate = today.add(
-    delivery.days, 'days'
-  )
-  const dateString = deliverydate.format('dddd, MMMM D')
+    })
   
   
-  const deliveryprice = delivery.price === 0
-  ?'FREE - '
-  :`₹${delivery.price} - `
+  //js-remove-${cartItem.itemId}
   
-  html +=
-  `
+  
+  function deliveryHTML(cartItem) {
+    let html = ''
+    
+    deliveryOptions.forEach((delivery) => {
+      const isChecked = delivery.id === cartItem.deliveryOptionId
+      
+      const today = dayjs();
+      const deliverydate = today.add(
+        delivery.days, 'days'
+      )
+      const dateString = deliverydate.format('dddd, MMMM D')
+      
+      
+      const deliveryprice = delivery.price === 0 ?
+        'FREE - ' :
+        `₹${delivery.price} - `
+      
+      html +=
+        `
   <div class="delivery-input-select"
   data-delivery-option-id="${delivery.id}"
   data-item-id="${cartItem.itemId}">
@@ -156,106 +158,110 @@ function deliveryHTML(cartItem){
    </section>
    </div>  
   `
-  
- 
-});
-return html
-  
-}
-document.querySelectorAll('.delivery-input-select').forEach((element) => {
-  element.addEventListener('click', () => {
-    // const {itemId, deliveryOptionId} = element.dataset
-    const deliveryOptionId = element.dataset.deliveryOptionId
-    const itemId = element.dataset.itemId
-    
-    updatedeliveryId(itemId, deliveryOptionId)
-    
-  })
-  
-})
-
-
-
-
-
-
-
-deletItems();
-function deletItems(){
-  let btnId;
-  let updated = [];
-
-document.querySelectorAll('.delete-link').forEach((link) => {
-
-  link.addEventListener('click', (event) => {
-    btnId = event.target.dataset.itemId;
-    updated = [];
-
-    cart.forEach( (cartItem)=>{
-    if (btnId !== cartItem.itemId) {
-      updated.push(cartItem)
       
-    }
+      
+    });
+    return html
+    
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  deletItems();
+  
+  function deletItems() {
+    let btnId;
+    let updated = [];
+    
+    document.querySelectorAll('.delete-link').forEach((link) => {
+      
+      link.addEventListener('click', (event) => {
+        btnId = event.target.dataset.itemId;
+        updated = [];
+        
+        cart.forEach((cartItem) => {
+          if (btnId !== cartItem.itemId) {
+            updated.push(cartItem)
+            
+          }
+        })
+        
+        cart = updated;
+        localStorage.setItem('cart', JSON.stringify(cart))
+        
+        const removed = document.querySelector(`.js-remove-${btnId}`)
+        
+        removed.remove()
+        checkout(cart)
+        // ui()
+        // deletItems()
+      })
+      
     })
+  }
+  //const qtyInput = document.querySelectorAll('.qty-input')
   
-   cart = updated;
-   localStorage.setItem('cart', JSON.stringify(cart))
-   
-   const removed = document.querySelector(`.js-remove-${btnId}`)
-   
-   removed.remove()
-   checkout(cart)
-  // ui()
-  // deletItems()
+  let updtId;
+  document.querySelectorAll('.update-link').forEach((link) => {
+    
+    link.addEventListener('click', (event) => {
+      // hides previous clicked ones
+      updtId = event.target.dataset.itemId;
+      
+      //display only the one  matched with id
+      document.querySelectorAll('.after-updt').forEach((update) => {
+        
+        update.classList.remove('on');
+        if (update.dataset.itemId === updtId) { update.classList.add('on'); }
+        
+        
+      }); //all after- update endsloop
+    }) //link event listener end 
+    
+  }) // loop for all update link 
+  
+  
+  const save = document.querySelectorAll('.save-link')
+  savebbtn()
+  
+  function savebbtn() {
+    save.forEach((save) => {
+      
+      save.addEventListener('click', () => {
+        
+        
+        const saveId = save.dataset.itemId
+        if (saveId === updtId) {
+          const matchingUpdt = document.querySelector(`.after-updt[data-item-id="${updtId}"]`);
+          matchingUpdt.classList.remove('on')
+        };
+        
+        
+        updateQty(saveId)
+        checkout(cart)
+        
+      })
+      
+      
+      
+    })
+  }
+  
+  document.querySelectorAll('.delivery-input-select').forEach((element) => {
+    element.addEventListener('click', () => {
+      // const {itemId, deliveryOptionId} = element.dataset
+      const deliveryOptionId = element.dataset.deliveryOptionId
+      const itemId = element.dataset.itemId
+      
+      updatedeliveryId(itemId, deliveryOptionId)
+      headline();
+    })
+    
   })
-
-})
+  
 }
-//const qtyInput = document.querySelectorAll('.qty-input')
-
-let updtId ;
-document.querySelectorAll('.update-link').forEach( (link)=>{
-  
-  link.addEventListener('click',(event)=>{
-// hides previous clicked ones
-  updtId = event.target.dataset.itemId;
-  
-//display only the one  matched with id
- document.querySelectorAll('.after-updt').forEach((update) => {
-  
-  update.classList.remove('on');
-   if (update.dataset.itemId === updtId)
-   { update.classList.add('on');}
-  
-  
- });//all after- update endsloop
- })//link event listener end 
- 
-})// loop for all update link 
-
-
-const save = document.querySelectorAll('.save-link')
-savebbtn()
-function savebbtn(){ 
-save.forEach((save)=>{
-   
-  save.addEventListener('click',()=>{
-  
-  
-  const saveId = save.dataset.itemId
-   if (saveId === updtId) {
-   const matchingUpdt = document.querySelector(`.after-updt[data-item-id="${updtId}"]`); matchingUpdt.classList.remove('on')};
-   
-   
-   updateQty(saveId)
-   checkout(cart)
-
-   })
-  
-  
-  
-  })
-}
-  
-
-

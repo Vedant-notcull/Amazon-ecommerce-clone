@@ -68,4 +68,6 @@ export function updatedeliveryId(itemId, deliveryOptionId) {
   })
   matching.deliveryOptionId = deliveryOptionId
   localStorage.setItem('cart', JSON.stringify(cart))
+  
+  
 }
