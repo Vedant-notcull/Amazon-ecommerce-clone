@@ -16,6 +16,7 @@ export function displayAdded(itemId) {
 //quantity increase function 
 // increase the quantity of items in cart in the logo in header
 export function quantityIncrease(cart) {
+  cart = JSON.parse(localStorage.getItem('cart'))
   let cartQuantity = 0;
   cart.forEach((item) => {
     cartQuantity += item.quantity
@@ -42,7 +43,7 @@ export function checkout() {
 //when the delivery date is updated in local storage
 // it gets the new date and updates the product box headline 
 export function headline() {
-  const cart = JSON.parse(localStorage.getItem('cart'))
+  let cart = JSON.parse(localStorage.getItem('cart'))
   
   cart.forEach((item) => {
     const itemId = item.itemId;

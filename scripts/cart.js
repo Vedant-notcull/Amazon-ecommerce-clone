@@ -60,6 +60,8 @@ export function updateQty(saveId) {
 }
 
 export function updatedeliveryId(itemId, deliveryOptionId) {
+  cart = JSON.parse(localStorage.getItem('cart'))
+
   let matching;
   cart.forEach((cartItem) => {
     if (cartItem.itemId === itemId) {

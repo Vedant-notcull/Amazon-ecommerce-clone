@@ -12,13 +12,13 @@ import {paymentUi} from '/scripts/check-out /money-part.js'
 console.log('heloo')
 
 
+
+
+
 let cart = JSON.parse(localStorage.getItem('cart'))
 
-
-
-
-
 export function ui() {
+  
   checkout()
   document.querySelector('.layout-1').innerHTML = ''
   
@@ -167,7 +167,7 @@ ${deliveryHTML(cartItem)}
       link.addEventListener('click', (event) => {
         btnId = event.target.dataset.itemId;
         updated = [];
-      cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart = JSON.parse(localStorage.getItem('cart'))
 
         cart.forEach((cartItem) => {
           if (btnId !== cartItem.itemId) {
@@ -178,12 +178,16 @@ ${deliveryHTML(cartItem)}
         
         cart = updated;
         localStorage.setItem('cart', JSON.stringify(cart))
-        
+      
+      cart = JSON.parse(localStorage.getItem('cart'))
         const removed = document.querySelector(`.js-remove-${btnId}`)
         
         removed.remove()
         checkout()
         paymentUi()
+        
+      localStorage.setItem('cart', JSON.stringify(cart))
+      ui()
         // ui()
         // deletItems()
       })
@@ -228,10 +232,10 @@ ${deliveryHTML(cartItem)}
           matchingUpdt.classList.remove('on')
         };
         
-        
         updateQty(saveId)
         checkout()
         paymentUi()
+        
       })
       
       
@@ -241,6 +245,8 @@ ${deliveryHTML(cartItem)}
   
   document.querySelectorAll('.delivery-input-select').forEach((element) => {
     element.addEventListener('click', () => {
+    cart = JSON.parse(localStorage.getItem('cart')) || [];
+
       // const {itemId, deliveryOptionId} = element.dataset
       const deliveryOptionId = element.dataset.deliveryOptionId
       const itemId = element.dataset.itemId
