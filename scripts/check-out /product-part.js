@@ -3,10 +3,11 @@ import {
   updateQty,
   updatedeliveryId
 } from '/scripts/cart.js'
-import { products } from '/scripts/products.js'
+import { products, getProduct} from '/scripts/products.js'
 import { checkout, headline } from '/scripts/functions.js'
-import { deliveryOptions } from '/scripts/delivery.js'
+import { deliveryOptions, getDeliveryId} from '/scripts/delivery.js'
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js'
+import {paymentUi} from '/scripts/check-out /money-part.js'
 
 console.log('heloo')
 
@@ -22,34 +23,17 @@ export function ui() {
   document.querySelector('.layout-1').innerHTML = ''
   
   cart.forEach((cartItem) => {
+  const itemId = cartItem.itemId;
+  let matchingItem = getProduct(itemId )
+  let delivery = getDeliveryId(deliveryOptions,cartItem)
     
-    const itemId = cartItem.itemId;
-    
-    let matchingItem = '';
-    
-    products.forEach((product) => {
-      if (itemId === product.productid) {
-        matchingItem = product
-      }
-    })
+  const today = dayjs();
+  const deliverydate = today.add(
+    delivery.days, 'days')
+  const dateString = deliverydate.format('dddd, MMMM D')
     
     
-    let delivery;
-    const deliveryId = cartItem.deliveryOptionId
-    deliveryOptions.forEach((option) => {
-      if (option.id === deliveryId) {
-        delivery = option
-      }
-    });
-    
-    const today = dayjs();
-    const deliverydate = today.add(
-      delivery.days, 'days'
-    )
-    const dateString = deliverydate.format('dddd, MMMM D')
-    
-    
-    document.querySelector('.layout-1').innerHTML += `
+document.querySelector('.layout-1').innerHTML += `
 <div class="product-box 
 js-remove-${cartItem.itemId}" >
  <div class="product-info">
@@ -199,6 +183,7 @@ ${deliveryHTML(cartItem)}
         
         removed.remove()
         checkout()
+        paymentUi()
         // ui()
         // deletItems()
       })
@@ -246,7 +231,7 @@ ${deliveryHTML(cartItem)}
         
         updateQty(saveId)
         checkout()
-        
+        paymentUi()
       })
       
       
@@ -262,6 +247,7 @@ ${deliveryHTML(cartItem)}
       
       updatedeliveryId(itemId, deliveryOptionId)
       headline();
+      paymentUi()
     })
     
   })
