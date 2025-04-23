@@ -16,7 +16,7 @@ export function displayAdded(itemId) {
 //quantity increase function 
 // increase the quantity of items in cart in the logo in header
 export function quantityIncrease(cart) {
-  cart = JSON.parse(localStorage.getItem('cart'))
+  cart = JSON.parse(localStorage.getItem('cart')) || []
   let cartQuantity = 0;
   cart.forEach((item) => {
     cartQuantity += item.quantity

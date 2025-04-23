@@ -3,7 +3,6 @@ import {products} from '../scripts/products.js'
 import {displayAdded, quantityIncrease } from '../scripts/functions.js'
 
 quantityIncrease(ogcart)
-
 products.forEach((item) => {
   document.querySelector('.item-layout')
     .innerHTML += `
