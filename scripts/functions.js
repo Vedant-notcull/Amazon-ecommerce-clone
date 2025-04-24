@@ -1,4 +1,6 @@
-import { deliveryOptions } from '/scripts/delivery.js';
+import { deliveryOptions,getDeliveryId,
+  calculateDate
+} from '/scripts/delivery.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 
 // displayAdded() function
@@ -26,16 +28,7 @@ export function quantityIncrease(cart) {
 }
 
 
-export function checkout() {
-  const cart = JSON.parse(localStorage.getItem('cart'))
-  let cartquantity = 0
-  cart.forEach((item) => {
-    cartquantity += item.quantity
-  })
-  document.querySelector('.sec2').innerHTML =
-    `Checkout (${cartquantity} items)`
-  
-}
+
 
 
 
@@ -45,21 +38,12 @@ export function checkout() {
 export function headline() {
   let cart = JSON.parse(localStorage.getItem('cart'))
   
-  cart.forEach((item) => {
-    const itemId = item.itemId;
-    const deliveryOptionId = item.deliveryOptionId;
-    
-    
-    let delivery;
-    const deliveryId = item.deliveryOptionId
-    deliveryOptions.forEach((option) => {
-      if (option.id === deliveryId) {
-        delivery = option
-      }
-    });
-    
-    const deliveryDate = dayjs().add(delivery.days, 'days');
-    const dateString = deliveryDate.format('dddd, MMMM D');
+  cart.forEach((cartItem) => {
+  const itemId = cartItem.itemId;
+
+let delivery = getDeliveryId(deliveryOptions, cartItem)
+const deliverydate = calculateDate(delivery)
+const dateString = deliverydate.format('dddd, MMMM D')
     
     
     const productBox = document.querySelector(`.js-remove-${itemId}`);

@@ -3,11 +3,12 @@ import {
   updateQty,
   updatedeliveryId
 } from '/scripts/cart.js'
-import { products, getProduct} from '/scripts/products.js'
-import { checkout, headline } from '/scripts/functions.js'
-import { deliveryOptions, getDeliveryId} from '/scripts/delivery.js'
+import { products, getProduct } from '/scripts/products.js'
+import { headline } from '/scripts/functions.js'
+import { checkout } from '/scripts/check-out /checkOut-header.js'
+import { deliveryOptions, getDeliveryId, calculateDate } from '/scripts/delivery.js'
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js'
-import {paymentUi} from '/scripts/check-out /money-part.js'
+import { paymentUi } from '/scripts/check-out /money-part.js'
 
 console.log('heloo')
 
@@ -23,17 +24,21 @@ export function ui() {
   document.querySelector('.layout-1').innerHTML = ''
   
   cart.forEach((cartItem) => {
-  const itemId = cartItem.itemId;
-  let matchingItem = getProduct(itemId )
-  let delivery = getDeliveryId(deliveryOptions,cartItem)
+    const itemId = cartItem.itemId;
+    let matchingItem = getProduct(itemId)
     
-  const today = dayjs();
-  const deliverydate = today.add(
-    delivery.days, 'days')
-  const dateString = deliverydate.format('dddd, MMMM D')
+    let delivery = getDeliveryId(deliveryOptions, cartItem)
+    const deliverydate = calculateDate(delivery)
+    const dateString = deliverydate.format('dddd, MMMM D')
+    /*  const today = dayjs();
+     const deliverydate = today.add(
+        delivery.days, 'days') */
     
     
-document.querySelector('.layout-1').innerHTML += `
+    
+    
+    
+    document.querySelector('.layout-1').innerHTML += `
 <div class="product-box 
 js-remove-${cartItem.itemId}" >
  <div class="product-info">
@@ -111,12 +116,9 @@ ${deliveryHTML(cartItem)}
     deliveryOptions.forEach((delivery) => {
       const isChecked = delivery.id === cartItem.deliveryOptionId
       
-      const today = dayjs();
-      const deliverydate = today.add(
-        delivery.days, 'days'
-      )
+     let currentDili = getDeliveryId(deliveryOptions, cartItem)
+      const deliverydate = calculateDate(delivery)
       const dateString = deliverydate.format('dddd, MMMM D')
-      
       
       const deliveryprice = delivery.price === 0 ?
         'FREE - ' :
@@ -167,8 +169,8 @@ ${deliveryHTML(cartItem)}
       link.addEventListener('click', (event) => {
         btnId = event.target.dataset.itemId;
         updated = [];
-      cart = JSON.parse(localStorage.getItem('cart')) || []
-
+        cart = JSON.parse(localStorage.getItem('cart')) || []
+        
         cart.forEach((cartItem) => {
           if (btnId !== cartItem.itemId) {
             updated.push(cartItem)
@@ -178,16 +180,15 @@ ${deliveryHTML(cartItem)}
         
         cart = updated;
         localStorage.setItem('cart', JSON.stringify(cart))
-      
-      cart = JSON.parse(localStorage.getItem('cart')) || []
+        
+        cart = JSON.parse(localStorage.getItem('cart')) || []
         const removed = document.querySelector(`.js-remove-${btnId}`)
         
-        removed.remove()
         checkout()
         paymentUi()
         
-      localStorage.setItem('cart', JSON.stringify(cart))
-  
+        localStorage.setItem('cart', JSON.stringify(cart))
+        ui()
         // ui()
         // deletItems()
       })
@@ -219,7 +220,7 @@ ${deliveryHTML(cartItem)}
   const save = document.querySelectorAll('.save-link')
   savebbtn()
   cart = JSON.parse(localStorage.getItem('cart')) || [];
-
+  
   function savebbtn() {
     save.forEach((save) => {
       
@@ -245,14 +246,14 @@ ${deliveryHTML(cartItem)}
   
   document.querySelectorAll('.delivery-input-select').forEach((element) => {
     element.addEventListener('click', () => {
-    cart = JSON.parse(localStorage.getItem('cart')) || [];
-
+      cart = JSON.parse(localStorage.getItem('cart')) || [];
+      
       // const {itemId, deliveryOptionId} = element.dataset
       const deliveryOptionId = element.dataset.deliveryOptionId
       const itemId = element.dataset.itemId
       
       updatedeliveryId(itemId, deliveryOptionId)
-      headline();
+      headline()
       paymentUi()
     })
     
