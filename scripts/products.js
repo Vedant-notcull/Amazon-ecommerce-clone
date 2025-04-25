@@ -1,3 +1,21 @@
+class Product{
+  productid;
+  image;
+  name;
+  rating;
+  price;
+  
+  constructor(productInfo){
+  this.productid= productInfo.productid;
+  this.image = productInfo.image;
+  this.name = productInfo.name;
+  this.rating = productInfo.rating;
+  this.price = productInfo.price
+  }
+}
+
+
+
 export const products = [
   {
     productid: "id1",
@@ -140,6 +158,16 @@ export const products = [
     price: "49",
   }
 ];
+
+products.map( (productInfo)=>{
+  return new Product(productInfo)
+})
+console.log(products)
+
+
+
+
+
 
 
 
