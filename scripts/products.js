@@ -5,6 +5,9 @@ class Product{
   rating;
   price;
   
+  extraInfo(){
+    return ''
+  }
   constructor(productInfo){
   this.productid= productInfo.productid;
   this.image = productInfo.image;
@@ -14,8 +17,40 @@ class Product{
   }
 }
 
+class Clothing extends Product {
+  sizeChartLink;
+  constructor(productInfo){
+    super(productInfo);
+    this.sizeChartLink = '/images/clothing-size-chart.png'
+  }
+  
+  extraInfo(){
+    return `
+  <a href="${this.sizeChartLink}" style="color:blue">size chart </a>
+    `
+  }
+}
 
 
+export let products = []
+
+export function loadProducts(fun){
+const ved = new XMLHttpRequest();
+
+ved.addEventListener('load', () => {
+  products = JSON.parse(ved.response)
+  .map((productInfo) => {
+  if (productInfo.type === 'clothing') { return new Clothing(productInfo) }
+  return new Product(productInfo)
+})
+fun();
+})
+ved.open('GET', 'https://vedant-notcull.github.io/Vedant-Backend/product.json')
+ved.send();
+
+}
+
+/*  
 export const products = [
   {
     productid: "id1",
@@ -44,6 +79,7 @@ export const products = [
     name: "Adults Plain Cotton T-Shirt - 2 Pack",
     rating: { stars: 4.5, count: 148 },
     price: "799",
+    type : "clothing"
   },
   {
     productid: "id5",
@@ -157,13 +193,9 @@ export const products = [
     rating: { stars: 4.5, count: 28 },
     price: "49",
   }
-];
-
-products.map( (productInfo)=>{
-  return new Product(productInfo)
-})
+]
 console.log(products)
-
+*/
 
 
 

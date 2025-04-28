@@ -1,7 +1,10 @@
 import {cart as ogcart, checkMatchingQuantity} from '../scripts/cart.js'
-import {products} from '../scripts/products.js'
+import {products,loadProducts} from '../scripts/products.js'
 import {displayAdded, quantityIncrease } from '../scripts/functions.js'
 
+loadProducts(updateDisplay)
+
+function updateDisplay(){ 
 quantityIncrease(ogcart)
 products.forEach((item) => {
   document.querySelector('.item-layout')
@@ -39,6 +42,7 @@ products.forEach((item) => {
         <option value="9">9</option>
       </select>
      </div>
+     ${item.extraInfo()}
     </nav>
     <div class="added-to-cart-${item.productid}">
      <img src="images/checkmark.png"> Added
@@ -93,3 +97,4 @@ function buttonclick() {
 }  
   
   
+}

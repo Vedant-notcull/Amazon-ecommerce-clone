@@ -3,7 +3,7 @@ import {
   updateQty,
   updatedeliveryId
 } from '/scripts/cart.js'
-import { products, getProduct } from '/scripts/products.js'
+import { products, getProduct, loadProducts} from '/scripts/products.js'
 import { headline } from '/scripts/functions.js'
 import { checkout } from '/scripts/check-out /checkOut-header.js'
 import { deliveryOptions, getDeliveryId, calculateDate } from '/scripts/delivery.js'
@@ -14,11 +14,11 @@ console.log('heloo')
 
 
 
+export function ui() {
 
 
 let cart = JSON.parse(localStorage.getItem('cart')) || []
 
-export function ui() {
   
   checkout()
   document.querySelector('.layout-1').innerHTML = ''
@@ -47,7 +47,7 @@ js-remove-${cartItem.itemId}" >
    </nav>
    <nav class="info-img-part">
    <div class="image-part">
-     <img src="${matchingItem.image}">
+   <img src="${matchingItem.image}">
    </div>
    <div class="info-part">
      <span class=info-name>
@@ -260,3 +260,5 @@ ${deliveryHTML(cartItem)}
   })
   
 }
+
+ 
