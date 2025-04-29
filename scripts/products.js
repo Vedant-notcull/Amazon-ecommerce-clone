@@ -1,56 +1,83 @@
-class Product{
+class Product {
   productid;
   image;
   name;
   rating;
   price;
   
-  extraInfo(){
+  extraInfo() {
     return ''
   }
-  constructor(productInfo){
-  this.productid= productInfo.productid;
-  this.image = productInfo.image;
-  this.name = productInfo.name;
-  this.rating = productInfo.rating;
-  this.price = productInfo.price
+  constructor(productInfo) {
+    this.productid = productInfo.productid;
+    this.image = productInfo.image;
+    this.name = productInfo.name;
+    this.rating = productInfo.rating;
+    this.price = productInfo.price
   }
 }
 
 class Clothing extends Product {
   sizeChartLink;
-  constructor(productInfo){
+  constructor(productInfo) {
     super(productInfo);
     this.sizeChartLink = '/images/clothing-size-chart.png'
   }
   
-  extraInfo(){
-    return `
-  <a href="${this.sizeChartLink}" style="color:blue">size chart </a>
+  extraInfo() {
+    return `<div>
+  <a href="${this.sizeChartLink}" style="color:blue">size chart </a> </div>
     `
   }
 }
 
+class Appliances extends Product {
+  instructionsLink;
+  warantyLink;
+  constructor(productInfo) {
+    super(productInfo);
+    this.instructionsLink = '/images/appliance-instructions.png';
+    this.warantyLink = '/images/appliance-warranty.png'
+  }
+  extraInfo() {
+    return `
+    <div>
+    <a href="${this.instructionsLink}" style="color:blue">Instructions</a>
+    <a href="${this.warantyLink}" style="color:blue">Waranty</a> </div>`
+  }
+  
+}
+
+
+
+
+
+
 
 export let products = []
 
-export function loadProductsFetch(){
+export function loadProductsFetch() {
   const promise = fetch(
     'https://vedant-notcull.github.io/Vedant-Backend/product.json'
-  ).then((response)=>{
+  ).then((response) => {
     return response.json()
-  }).then((productData)=>{
+  }).then((productData) => {
     products = productData.map((productInfo) => {
-      if(productInfo.type==='clothing'){
+      if (productInfo.type === 'clothing') {
         return new Clothing(productInfo)
+      } else if (["id5", "id7"].includes(productInfo.productid)) {
+        return new Appliances(productInfo)
+      } else {
+        return new Product(productInfo)
       }
-  return new Product(productInfo)
     })
     
   })
   
-  return promise 
+  return promise
 }
+
+
 
 /*
 
