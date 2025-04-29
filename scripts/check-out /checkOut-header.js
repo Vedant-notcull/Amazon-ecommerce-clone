@@ -2,9 +2,9 @@ import {cart} from '/scripts/cart.js'
 
 
 export function checkout() {
-const cart = JSON.parse(localStorage.getItem('cart'))
+cart.cartItems = JSON.parse(localStorage.getItem('cart-oop'))
 let cartquantity = 0
-cart.forEach((item) => {
+cart.cartItems.forEach((item) => {
   cartquantity += item.quantity
 })
 document.querySelector('.sec2').innerHTML =

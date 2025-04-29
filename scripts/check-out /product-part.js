@@ -1,8 +1,4 @@
-import {
-  cart as cartt,
-  updateQty,
-  updatedeliveryId
-} from '/scripts/cart.js'
+import { cart as carrt } from '/scripts/data/cart-class.js'
 import { products, getProduct, } from '/scripts/products.js'
 import { headline } from '/scripts/functions.js'
 import { checkout } from '/scripts/check-out /checkOut-header.js'
@@ -17,13 +13,13 @@ console.log('heloo')
 export function ui() {
 
 
-let cart = JSON.parse(localStorage.getItem('cart')) || []
+let localcart = JSON.parse(localStorage.getItem('cart-oop')) || []
 
   
   checkout()
   document.querySelector('.layout-1').innerHTML = ''
   
-  cart.forEach((cartItem) => {
+  localcart.forEach((cartItem) => {
     const itemId = cartItem.itemId;
     let matchingItem = getProduct(itemId)
     
@@ -100,7 +96,7 @@ ${deliveryHTML(cartItem)}
   
   document.querySelector('.clear')
     .addEventListener('click', () => {
-      localStorage.removeItem('cart');
+      localStorage.removeItem('cart-oop');
       document.querySelector('.layout-1').innerHTML = `
     <h1>Review your Order</h1>
     `;
@@ -169,25 +165,25 @@ ${deliveryHTML(cartItem)}
       link.addEventListener('click', (event) => {
         btnId = event.target.dataset.itemId;
         updated = [];
-        cart = JSON.parse(localStorage.getItem('cart')) || []
+        let localcart= JSON.parse(localStorage.getItem('cart-oop')) || []
         
-        cart.forEach((cartItem) => {
+       localcart.forEach((cartItem) => {
           if (btnId !== cartItem.itemId) {
             updated.push(cartItem)
             
           }
         })
         
-        cart = updated;
-        localStorage.setItem('cart', JSON.stringify(cart))
-        
-        cart = JSON.parse(localStorage.getItem('cart')) || []
+        carrt.cartItems= updated;
+        carrt.saveToStorage()
+
+        carrt.cartItems = JSON.parse(localStorage.getItem('cart-oop')) || []
         const removed = document.querySelector(`.js-remove-${btnId}`)
         
         checkout()
         paymentUi()
         
-        localStorage.setItem('cart', JSON.stringify(cart))
+        carrt.saveToStorage()
         ui()
         // ui()
         // deletItems()
@@ -219,8 +215,12 @@ ${deliveryHTML(cartItem)}
   
   const save = document.querySelectorAll('.save-link')
   savebbtn()
-  cart = JSON.parse(localStorage.getItem('cart')) || [];
-  
+  carrt.cartItems = JSON.parse(localStorage.getItem('cart-oop')) || [];
+
+
+/////////////
+///remaining 
+/////////////
   function savebbtn() {
     save.forEach((save) => {
       
@@ -233,7 +233,7 @@ ${deliveryHTML(cartItem)}
           matchingUpdt.classList.remove('on')
         };
         
-        updateQty(saveId)
+        carrt.updateQty(saveId)
         checkout()
         paymentUi()
         
@@ -246,7 +246,7 @@ ${deliveryHTML(cartItem)}
   
   document.querySelectorAll('.delivery-input-select').forEach((element) => {
     element.addEventListener('click', () => {
-      cart = JSON.parse(localStorage.getItem('cart')) || [];
+      carrt.cartItems = JSON.parse(localStorage.getItem('cart-oop')) || [];
       
       // const {itemId, deliveryOptionId} = element.dataset
       const deliveryOptionId = element.dataset.deliveryOptionId

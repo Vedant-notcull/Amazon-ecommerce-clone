@@ -1,4 +1,4 @@
-import {cart} from '/scripts/cart.js';
+import {cart} from '/scripts/data/cart-class.js';
 import {getProduct} from '/scripts/products.js'
 import{getDeliveryId,deliveryOptions }from '/scripts/delivery.js'
 
@@ -12,7 +12,7 @@ export function paymentUi(){
   let shipping = 0;
 
   
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
+let cart = JSON.parse(localStorage.getItem('cart-oop')) || [];
 
  cart.forEach((cartItem)=>{
   const product = getProduct(cartItem.itemId)
