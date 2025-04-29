@@ -3,7 +3,7 @@ import {
   updateQty,
   updatedeliveryId
 } from '/scripts/cart.js'
-import { products, getProduct, loadProducts} from '/scripts/products.js'
+import { products, getProduct, } from '/scripts/products.js'
 import { headline } from '/scripts/functions.js'
 import { checkout } from '/scripts/check-out /checkOut-header.js'
 import { deliveryOptions, getDeliveryId, calculateDate } from '/scripts/delivery.js'

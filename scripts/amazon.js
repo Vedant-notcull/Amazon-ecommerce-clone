@@ -1,8 +1,10 @@
 import {cart as ogcart, checkMatchingQuantity} from '../scripts/cart.js'
-import {products,loadProducts} from '../scripts/products.js'
+import {products,loadProductsFetch} from '../scripts/products.js'
 import {displayAdded, quantityIncrease } from '../scripts/functions.js'
 
-loadProducts(updateDisplay)
+loadProductsFetch().then(()=>{
+updateDisplay();
+})
 
 function updateDisplay(){ 
 quantityIncrease(ogcart)

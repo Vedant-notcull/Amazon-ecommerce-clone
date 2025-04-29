@@ -34,21 +34,38 @@ class Clothing extends Product {
 
 export let products = []
 
+export function loadProductsFetch(){
+  const promise = fetch(
+    'https://vedant-notcull.github.io/Vedant-Backend/product.json'
+  ).then((response)=>{
+    return response.json()
+  }).then((productData)=>{
+    products = productData.map((productInfo) => {
+      if(productInfo.type==='clothing'){
+        return new Clothing(productInfo)
+      }
+  return new Product(productInfo)
+    })
+    
+  })
+  
+  return promise 
+}
+
+/*
+
 export function loadProducts(fun){
 const ved = new XMLHttpRequest();
 
 ved.addEventListener('load', () => {
   products = JSON.parse(ved.response)
-  .map((productInfo) => {
-  if (productInfo.type === 'clothing') { return new Clothing(productInfo) }
-  return new Product(productInfo)
-})
+  .
 fun();
 })
 ved.open('GET', 'https://vedant-notcull.github.io/Vedant-Backend/product.json')
 ved.send();
 
-}
+} */
 
 /*  
 export const products = [
