@@ -252,7 +252,7 @@ ${deliveryHTML(cartItem)}
       const deliveryOptionId = element.dataset.deliveryOptionId
       const itemId = element.dataset.itemId
       
-      updatedeliveryId(itemId, deliveryOptionId)
+      carrt.updatedeliveryId(itemId, deliveryOptionId)
       headline()
       paymentUi()
     })

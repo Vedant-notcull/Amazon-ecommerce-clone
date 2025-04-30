@@ -1,36 +1,37 @@
-import {cart} from '/scripts/data/cart-class.js';
-import {getProduct} from '/scripts/products.js'
-import{getDeliveryId,deliveryOptions }from '/scripts/delivery.js'
+import { cart } from '/scripts/data/cart-class.js';
+import { getProduct } from '/scripts/products.js'
+import { getDeliveryId, deliveryOptions } from '/scripts/delivery.js'
+import{addOrder,removeOrders} from '/scripts/order.js'
 
-export function paymentUi(){
+export function paymentUi() {
   
   document.querySelector('.order-box')
-  .innerHTML = '';
-  let productPrice =0;
-  let quantity= 0
-  let orderSummary =''
+    .innerHTML = '';
+  let productPrice = 0;
+  let quantity = 0
+  let orderSummary = ''
   let shipping = 0;
-
-  
-let cart = JSON.parse(localStorage.getItem('cart-oop')) || [];
-
- cart.forEach((cartItem)=>{
-  const product = getProduct(cartItem.itemId)
-  productPrice += Number(product.price) * Number(cartItem.quantity)
-  quantity += cartItem.quantity
   
   
-  const deliveryOption = getDeliveryId(deliveryOptions,cartItem)
-  shipping += Number(deliveryOption.price)
- 
- })
- 
- const total = shipping + productPrice
- const tax = Number(total) * 0.1
- const totalwithTax = total + (tax)
-
-   orderSummary=
-  `
+  let cart = JSON.parse(localStorage.getItem('cart-oop')) || [];
+  
+  cart.forEach((cartItem) => {
+    const product = getProduct(cartItem.itemId)
+    productPrice += Number(product.price) * Number(cartItem.quantity)
+    quantity += cartItem.quantity
+    
+    
+    const deliveryOption = getDeliveryId(deliveryOptions, cartItem)
+    shipping += Number(deliveryOption.price)
+    
+  })
+  
+  const total = shipping + productPrice
+  const tax = Number(total) * 0.1
+  const totalwithTax = total + (tax)
+  
+  orderSummary =
+    `
   <div class="head">
     Oder-Summary
   </div>
@@ -64,18 +65,42 @@ let cart = JSON.parse(localStorage.getItem('cart-oop')) || [];
       <div>Order total</div>
       <div>₹${totalwithTax}</div>
     </nav>
-    <button>Place Your Order</button>
+    <button class="order-button"
+    >Place Your Order</button>
   </div>
   `
   
   document.querySelector('.order-box')
-  .innerHTML += orderSummary
+    .innerHTML += orderSummary
   
+  document.querySelector('.order-button')
+    .addEventListener('click', async () => {
+  try {
+    const response = await fetch('https://supersimplebackend.dev/orders', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        cart: cart
+      })
+    });
+    
+    const order = await response.json();
+    addOrder(order.cart)
+  } catch (error) {
+    console.error('Failed to place order:', error);
+    // Handle error here
+  }
   
-  
-  
-  
-  
-  
-  
+});
+
+document.querySelector('.order-clear').
+addEventListener('click',()=>{
+  removeOrders();
+})
+
+
 }
+
+

@@ -51,7 +51,7 @@ export const cart = {
   }, 
   
   updatedeliveryId(itemId, deliveryOptionId) {
-  this.cartItems = JSON.parse(localStorage.getItem('cart')) || []
+  this.cartItems = JSON.parse(localStorage.getItem('cart-oop')) || []
   
   let matching;
   this.cartItems.forEach((cartItem) => {
