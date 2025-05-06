@@ -1,7 +1,7 @@
-import { cart } from '/scripts/data/cart-class.js';
+import { cart as cartt } from '/scripts/data/cart-class.js';
 import { getProduct } from '/scripts/products.js'
 import { getDeliveryId, deliveryOptions } from '/scripts/delivery.js'
-import{addOrder,removeOrders} from '/scripts/order.js'
+import{addOrder,removeOrders} from '/scripts/data/order-data.js '
 
 export function paymentUi() {
   
@@ -70,6 +70,7 @@ export function paymentUi() {
   </div>
   `
   
+
   document.querySelector('.order-box')
     .innerHTML += orderSummary
   
@@ -82,7 +83,7 @@ export function paymentUi() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        cart: cart
+        cart:cartt.cartItems
       })
     });
     
@@ -92,7 +93,8 @@ export function paymentUi() {
     console.error('Failed to place order:', error);
     // Handle error here
   }
-  
+   
+  window.location.href ='orders.html'
 });
 
 document.querySelector('.order-clear').
