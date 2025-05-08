@@ -1,7 +1,7 @@
 import { cart as cartt } from '/scripts/data/cart-class.js';
 import { getProduct } from '/scripts/products.js'
 import { getDeliveryId, deliveryOptions } from '/scripts/delivery.js'
-import{addOrder,removeOrders} from '/scripts/data/order-data.js '
+import{addOrder,removeOrders,getOrderId} from '/scripts/data/order-data.js '
 
 export function paymentUi() {
   
@@ -88,6 +88,7 @@ export function paymentUi() {
     });
     
     const order = await response.json();
+    
     addOrder(order.cart)
   } catch (error) {
     console.error('Failed to place order:', error);

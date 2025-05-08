@@ -12,12 +12,13 @@ let allOrdersHTML = '';
 let itemId ;
 
 orders.forEach( (order)=>{
+  console.log(order.orderdate)
   let orderHTML = `
     <nav class="order-box" >
   <div class="order-info">
    <div class="part1">
     <span class="title">Order Placed</span>
-    <span>April 30</span>
+    <span>${order.orderdate}</span>
    </div>
    
    <div class="part2">
@@ -27,11 +28,11 @@ orders.forEach( (order)=>{
    
    <div class="part3">
      <span class="title">Order Id</span> 
-     <span> id1 </span>
+     <span> ${order.orderId} </span>
    </div>
   </div>
   `  // Start of one full order
-  order.forEach( ( orderItem)=>{
+  order.items.forEach( ( orderItem)=>{
     
       
     itemId = orderItem.itemId
