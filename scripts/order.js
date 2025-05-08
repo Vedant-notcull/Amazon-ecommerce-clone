@@ -12,7 +12,6 @@ let allOrdersHTML = '';
 let itemId ;
 
 orders.forEach( (order)=>{
-  console.log(order.orderdate)
   let orderHTML = `
     <nav class="order-box" >
   <div class="order-info">
@@ -31,13 +30,16 @@ orders.forEach( (order)=>{
      <span> ${order.orderId} </span>
    </div>
   </div>
-  `  // Start of one full order
+  ` 
+  
+  // Start of one full order
   order.items.forEach( ( orderItem)=>{
     
       
     itemId = orderItem.itemId
    // console.log(itemId)
  const product = getProduct(itemId) 
+
     
     const delivery = getDeliveryId(deliveryOptions, orderItem)
     const deliverydate = calculateDate(delivery)
@@ -64,22 +66,16 @@ orders.forEach( (order)=>{
     </nav>
     
     <nav class="sec3">
+    <a href="tracking.html?orderId=${order.orderId}&productId=${product.productid}">
      <button class="track">
       Track Package
      </button>
+     </a>
     </nav>
    </div>
    
     </div>
-  
-  
-  
-
-
   `
-  
-  
-  
     })
    orderHTML +=  `</nav>`; // End of one full order
     allOrdersHTML += orderHTML;
