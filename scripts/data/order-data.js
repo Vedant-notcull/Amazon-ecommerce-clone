@@ -30,3 +30,9 @@ export function getOrderId(){
   
   return lastId
 }
+
+
+export function getOrder(orderId){
+  return orders.find(order => String(order.orderId) === String(orderId));
+}
+
