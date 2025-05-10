@@ -5,6 +5,7 @@ import {displayAdded, quantityIncrease } from '../scripts/functions.js'
 
 loadProductsFetch().then(()=>{
 updateDisplay();
+
 })
 
 function updateDisplay(){ 
@@ -60,27 +61,31 @@ products.forEach((item) => {
 });
 
 search()
+// this function opens a new url and gives it a search param
 function search(){
   document.querySelector('.search-btn').addEventListener('click',()=>{
     const search = document.querySelector('.search-bar').value
-    //window.location.href =`index.html?search=${search}`
+    if(search){
+    window.location.href =`index.html?search=${search}`
+    }
+  })
+}
+
+//gets the search from url and siplay matching product 
+const url = new URL(window.location.href)
+const searchh = url.searchParams.get('search')
+
+if (searchh) {
+let matchedproduct = products.filter(product =>
+  product.keywords.includes(searchh.toLowerCase())) || (product => product.name.includes(searchh.toLowerCase()))
 
   
- let matchedproduct = products.filter(product =>
-    product.keywords.includes(search.toLowerCase()))
-  
-  
-  if(search){
     document.querySelector('.item-layout').innerHTML = ''
     displayMatched(matchedproduct)
   }
 
-
-  })
-}
-
-
-  function displayMatched(matchedproduct) {
+//this function only display the prody thich mathes with search
+function displayMatched(matchedproduct) {
     
     matchedproduct.forEach((item) => {
       
