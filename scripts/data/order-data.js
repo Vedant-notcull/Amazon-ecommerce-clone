@@ -4,7 +4,7 @@ export let orders =JSON.parse(localStorage.getItem('ORDERR')) || [];
 
 export function addOrder(order){
   const orderId = getOrderId();
-  const today = dayjs().format('D MMMM, YYYY');
+  const today = dayjs().format('D, MMMM');
   
   let newOrder = {
     orderId,
