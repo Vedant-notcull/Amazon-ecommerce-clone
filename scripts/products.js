@@ -4,7 +4,7 @@ class Product {
   name;
   rating;
   price;
-  
+  keywords;
   extraInfo() {
     return ''
   }
@@ -14,6 +14,7 @@ class Product {
     this.name = productInfo.name;
     this.rating = productInfo.rating;
     this.price = productInfo.price
+    this.keywords = productInfo.keywords
   }
 }
 
