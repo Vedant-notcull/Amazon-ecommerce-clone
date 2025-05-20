@@ -55,7 +55,7 @@ orders.forEach( (order)=>{
     </nav>
     
     <nav class="sec2">
-      <div>${product.name}
+      <div class="order-name">${product.name}
       </div>
       <div>Arriving on: ${dateString}</div>
       <div>Quantity: ${orderItem.quantity}</div>

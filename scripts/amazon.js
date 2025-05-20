@@ -84,6 +84,24 @@ let matchedproduct = products.filter(product =>
     displayMatched(matchedproduct)
   }
 
+  let swittxh = false
+
+document.querySelector('.right-part').addEventListener('click', ()=>{
+  if(swittxh === false){
+    document.querySelector('.cart-return').style.display = "flex";
+    document.querySelector('.cart-return').scrollIntoView({
+        behavior: 'smooth'
+      });
+    swittxh= true 
+  }
+  else if (swittxh === true){
+    document.querySelector('.cart-return').style.display = "none";
+    swittxh = false 
+
+  }
+})
+
+
 //this function only display the prody thich mathes with search
 function displayMatched(matchedproduct) {
     

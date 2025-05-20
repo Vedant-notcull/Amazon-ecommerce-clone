@@ -48,3 +48,16 @@ body{
 .green{
   color:green;
 }
+
+@media (max-width: 500px) {
+  .progress-titles{
+    font-size:17px ;
+  }
+  .progress-bar{
+    height:22px;
+    margin-top: 0px;
+  }
+  .naming{
+    font-size: 16px;
+  }
+}

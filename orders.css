@@ -54,6 +54,20 @@ body{
   
 }
 
+
+
+
+@media(max-width:500px){
+  .order-info{
+    flex-direction: column;
+    padding:12px;
+    font-size: 16px;
+  }
+  .part1,.part2,.part3{
+    flex-direction: row;
+    column-gap: 10px;
+  }
+}
 /* 
 ////////////£+""////////////£+""/////// 
 order box
@@ -87,6 +101,7 @@ order box
   display:flex;
   flex-direction:column;
   row-gap:5px;
+  flex-wrap: wrap;
   
 }.sec3{
   width:220px;
@@ -133,4 +148,52 @@ order box
   display:flex;
   flex-direction: column;
   justify-self: center;
+}
+
+
+@media(max-width:500px){
+  
+  .order-bin{
+    flex-direction: column;
+    word-wrap:wrap;
+    padding:10px 10px;
+    row-gap: 10px;
+  }
+  .order-box{
+    border-radius: 10px;
+    border: 1px solid #B1B1B1;
+  }
+  .order-info{
+    border:none;
+    border-bottom:1px solid #B1B1B1;;
+    border-top-right-radius:9px;
+    border-top-left-radius:9px;
+  }
+  .order-main{
+    border:none;
+  }
+  .sec2{
+    display:flex;
+    flex-wrap: wrap;
+    font-size:16px;
+    width:300px;
+  }
+  .sec2 div {
+    width:280px;
+    font-size: 15px;
+  }
+  .order-name{
+    width:300px;
+    display:flex;
+    text-wrap: wrap;
+    font-size: 15px;
+    font-weight: bold;
+  }
+  .buy-again{ 
+    padding:10px 90px;
+  }
+  .track{
+    padding:10px 10px ;
+    width:280px;
+  }
 }
