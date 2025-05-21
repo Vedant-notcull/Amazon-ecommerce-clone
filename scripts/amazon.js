@@ -63,11 +63,14 @@ products.forEach((item) => {
 search()
 // this function opens a new url and gives it a search param
 function search(){
-  document.querySelector('.search-btn').addEventListener('click',()=>{
-    const search = document.querySelector('.search-bar').value
-    if(search){
-    window.location.href =`index.html?search=${search}`
-    }
+  document.querySelectorAll('.search-btn')
+  .forEach( (searchBtn)=>{
+    searchBtn.addEventListener('click', () => {
+  const search = document.querySelector('.search-bar').value|| document.querySelector('.search-bar2').value
+  if (search) {
+    window.location.href = `index.html?search=${search}`
+  }
+})
   })
 }
 
