@@ -24,8 +24,10 @@ export function quantityIncrease(cart) {
   cart.forEach((item) => {
     cartQuantity += item.quantity
   })
-  document.querySelector('.cart-quantity').innerHTML = cartQuantity;
-  
+  document.querySelectorAll('.cart-quantity').forEach( (cartLogo)=>{
+    cartLogo.innerHTML = cartQuantity;
+  })
+
 }
 
 

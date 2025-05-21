@@ -7,7 +7,7 @@ let cartquantity = 0
 cart.cartItems.forEach((item) => {
   cartquantity += item.quantity
 })
-document.querySelector('.sec2').innerHTML =
-  `Checkout (${cartquantity} items)`
-
+document.querySelectorAll('.sec2').forEach( (checkout)=>{
+  checkout.innerHTML = `Checkout (${cartquantity} items)`
+})
 }
